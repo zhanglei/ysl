@@ -22,12 +22,11 @@ public class Main {
 	/**
 	 * <p>Title: main</p>
 	 * <p>Description: </p>
-	 * @param @param args
+	 * @param args
 	 * @return void
 	 * @throws
-	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 
 	}
 
