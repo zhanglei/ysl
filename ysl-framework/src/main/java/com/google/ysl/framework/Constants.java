@@ -20,9 +20,9 @@ package com.google.ysl.framework;
 public class Constants {
 
 	/**
-	 * @Fields app name :
+	 * @Fields server name :
 	 */
-	public static final String APP_NAME = "ysl-framework";
+	public static final String SERVER_NAME = "ysl-framework";
 
 	/**
 	 * @Fields session key :
