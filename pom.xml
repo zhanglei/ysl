@@ -8,5 +8,6 @@
   <name>ysl</name>
   <modules>
     <module>ysl-framework</module>
+    <module>ysl-spider</module>
   </modules>
 </project>
