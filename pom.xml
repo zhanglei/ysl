@@ -9,5 +9,6 @@
   <modules>
     <module>ysl-framework</module>
     <module>ysl-spider</module>
+    <module>ysl-cas</module>
   </modules>
 </project>
