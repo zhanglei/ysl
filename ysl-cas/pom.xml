@@ -6,10 +6,19 @@
   <artifactId>ysl-cas</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>ysl-cas Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-  </dependencies>
+  <name>ysl-cas</name>
+  <description>ysl-cas</description>
+  <url>http://www.ysl.com</url>
+  <scm>
+  	<connection>scm:svn:http://ysl.googlecode.com/svn/trunk/</connection>
+  	<developerConnection>scm:svn:http://ysl.googlecode.com/svn/trunk/</developerConnection>
+  	<tag>HEAD</tag>
+  	<url>http://ysl.googlecode.com/svn/trunk/</url>
+  </scm>
+  <organization>
+  	<name>ysl</name>
+  	<url>http://www.ysl.com</url>
+  </organization>
   <build>
     <finalName>ysl-cas</finalName>
   </build>
