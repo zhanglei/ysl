@@ -4,7 +4,7 @@
  * <p>Copyright: Copyright (C) 2011 YSL. All rights reserved. </p> 
  * <p>Company: </p>
  * @author zhanglei<zhanglei_job_email@163.com>
- * @date May 11, 2011
+ * @date 2011-5-15
  * @version 1.0
  */
 package com.google.ysl.spider;
@@ -14,7 +14,7 @@ package com.google.ysl.spider;
  * <p>Description: </p>
  * <p>Company: </p> 
  * @author zhanglei<zhanglei_job_email@163.com>
- * @date May 11, 2011
+ * @date 2011-5-15
  *
  */
 public class App {
@@ -22,12 +22,13 @@ public class App {
 	/**
 	 * <p>Title: main</p>
 	 * <p>Description: </p>
-	 * @param @param args
+	 * @param args
 	 * @return void
 	 * @throws
-	 * @param args
+	 *
 	 */
 	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 
 	}
 
