@@ -58,4 +58,20 @@ public class Constants {
 	 * @Fields File separator from System properties :
 	 */
 	public static final String FILE_SEP = System.getProperty("file.separator");
+
+	/**
+	 * @Fields HOST : 
+	 */
+	public static final String HOST = "open.ysl.com";
+
+	/**
+	 * @Fields URL : 
+	 */
+	public static final String URL = "http://open.ysl.com";
+
+	/**
+	 * @Fields OPEN_API_URL : 
+	 */
+	public static final String OPEN_API_URL = URL + "/api";
+
 }

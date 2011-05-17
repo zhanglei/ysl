@@ -17,6 +17,14 @@ package com.google.ysl.cas;
  * @date May 14, 2011
  *
  */
+/**
+ * <p>Title: Constants</p>
+ * <p>Description: </p>
+ * <p>Company: </p> 
+ * @author zhanglei<zhanglei_job_email@163.com>
+ * @date May 17, 2011
+ *
+ */
 public class Constants {
 
 	/**
@@ -58,5 +66,15 @@ public class Constants {
 	 * @Fields File separator from System properties :
 	 */
 	public static final String FILE_SEP = System.getProperty("file.separator");
+
+	/**
+	 * @Fields HOST : 
+	 */
+	public static final String HOST = "sso.ysl.com";
+
+	/**
+	 * @Fields URL : 
+	 */
+	public static final String URL = "http://sso.ysl.com";
 
 }
