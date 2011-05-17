@@ -248,4 +248,11 @@
 	<reporting>
 		<outputDirectory>${basedir}\target\site</outputDirectory>
 	</reporting>
+	<dependencies>
+		<dependency>
+			<groupId>net.oauth.core</groupId>
+			<artifactId>oauth</artifactId>
+			<version>20100527</version>
+		</dependency>
+	</dependencies>
 </project>
