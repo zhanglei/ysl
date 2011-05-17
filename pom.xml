@@ -10,5 +10,6 @@
     <module>ysl-framework</module>
     <module>ysl-spider</module>
     <module>ysl-cas</module>
+    <module>ysl-oauth</module>
   </modules>
 </project>
