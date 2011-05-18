@@ -17,6 +17,31 @@ package com.google.ysl.framework.common.hibernate;
  * @date May 9, 2011
  *
  */
-public class IdEntity {
+public abstract class IdEntity implements java.io.Serializable {
 
+	/**
+	 * @Fields serialVersionUID : 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @Fields DATE_FORMAT : 
+	 */
+	protected static final String DATE_FORMAT = "yyyy-MM-dd";
+
+	/**
+	 * @Fields TIME_FORMAT : 
+	 */
+	protected static final String TIME_FORMAT = "HH:mm:ss";
+
+	/**
+	 * @Fields DATE_TIME_FORMAT : 
+	 */
+	protected static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+	/**
+	 * @Fields TIMESTAMP_FORMAT : 
+	 */
+	protected static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
+	
 }
