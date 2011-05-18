@@ -1,25 +1,30 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.google.ysl</groupId>
-  <artifactId>ysl-oauth</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <name>ysl-oauth</name>
-  <url>http://www.ysl.com</url>
-  <description>ysl-oauth</description>
-  <organization>
-  	<name>ysl</name>
-  	<url>http://www.ysl.com</url>
-  </organization>
-  <scm>
-  	<url>http://ysl.googlecode.com/svn/trunk/</url>
-  	<connection>scm:svn:http://ysl.googlecode.com/svn/trunk/</connection>
-  	<developerConnection>scm:svn:http://ysl.googlecode.com/svn/trunk/</developerConnection>
-  	<tag>HEAD</tag>
-  </scm>
-  <repositories>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.google.ysl</groupId>
+	<artifactId>ysl-oauth</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>ysl-oauth</name>
+	<url>http://www.ysl.com</url>
+	<description>ysl-oauth</description>
+	<organization>
+		<name>ysl</name>
+		<url>http://www.ysl.com</url>
+	</organization>
+	<scm>
+		<url>http://ysl.googlecode.com/svn/trunk/</url>
+		<connection>scm:svn:http://ysl.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:http://ysl.googlecode.com/svn/trunk/</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	<properties>
+		<spring-security.version>3.0.5.RELEASE</spring-security.version>
+	</properties>
+	<repositories>
 		<repository>
 			<id>nexus-snapshots</id>
 			<name>local private nexus snapshots</name>
@@ -258,6 +263,11 @@
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.spring-security-oauth</groupId>
+			<artifactId>spring-security-oauth</artifactId>
+			<version>3.19</version>
 		</dependency>
 	</dependencies>
 </project>
