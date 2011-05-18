@@ -70,8 +70,32 @@ public class Constants {
 	public static final String URL = "http://open.ysl.com";
 
 	/**
-	 * @Fields OPEN_API_URL : 
+	 * @Fields API_URL : 
 	 */
-	public static final String OPEN_API_URL = URL + "/api";
+	public static final String API_URL = "http://api.ysl.com";
 
+	/**
+	 * @Fields OAUTH_URL : 
+	 */
+	public static final String OAUTH_URL = API_URL + "/oauth";
+
+	/**
+	 * @Fields REQUEST_TOKEN_URL : 
+	 */
+	public static final String REQUEST_TOKEN_URL = OAUTH_URL + "/request_token";
+
+	/**
+	 * @Fields authenticate_url : 
+	 */
+	public static final String AUTHENTICATE_URL = OAUTH_URL + "/authenticate";
+
+	/**
+	 * @Fields AUTHORIZE_URL : 
+	 */
+	public static final String AUTHORIZE_URL = OAUTH_URL + "/authorize";
+
+	/**
+	 * @Fields ACCESS_TOKEN_URL : 
+	 */
+	public static final String ACCESS_TOKEN_URL = OAUTH_URL + "/access_token";
 }
