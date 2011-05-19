@@ -36,9 +36,9 @@
 		<dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
 		<jdbc.groupId>mysql</jdbc.groupId>
 		<jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-		<jdbc.version>5.1.13</jdbc.version>
+		<jdbc.version>5.1.16</jdbc.version>
 		<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-		<jdbc.url><![CDATA[jdbc:mysql://127.0.0.1:3306/govsoft?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull]]></jdbc.url>
+		<jdbc.url><![CDATA[jdbc:mysql://127.0.0.1:3306/ysl_framework?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull]]></jdbc.url>
 		<jdbc.username>root</jdbc.username>
 		<jdbc.password>123456</jdbc.password>
 	</properties>
@@ -306,6 +306,148 @@
 					</reportPlugins>
 				</configuration>
 			</plugin>
+			<!-- tomcat插件 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>tomcat-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<url>http://localhost:8080/manager</url>
+					<username>tomcat</username>
+					<password>tomcat</password>
+					<path>/${project.build.finalName}</path>
+					<port>8080</port>
+					<!-- <warSourceDirectory>webapp</warSourceDirectory> -->
+					<!-- <tomcatWebXml>${project.build.directory}/${project.build.finalName}/WEB-INF/web.xml</tomcatWebXml> -->
+				</configuration>
+			</plugin>
+			<!-- yuicompressor插件 -->
+			<plugin>
+				<groupId>net.sf.alchim</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>0.7.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jslint</goal>
+							<goal>compress</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<aggregations></aggregations>
+					<disableOptimizations>false</disableOptimizations>
+					<encoding>UTF-8</encoding>
+					<excludes>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.min.js</exclude>
+						<exclude>**/*-min*</exclude>
+					</excludes>
+					<failOnWarning>false</failOnWarning>
+					<force>false</force>
+					<gzip>false</gzip>
+					<jswarn>false</jswarn>
+					<linebreakpos>0</linebreakpos>
+					<nomunge>false</nomunge>
+					<nosuffix>false</nosuffix>
+					<suffix>-min</suffix>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>ro.isdc.wro4j</groupId>
+				<artifactId>wro4j-maven-plugin</artifactId>
+				<version>${wro4j.version}</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<targetGroups>all,global,core,main,util,widgets,validation,jquery-ui,accordion,messager,grid
+					</targetGroups>
+					<minimize>true</minimize>
+					<destinationFolder>${project.build.directory}/${project.build.finalName}/wro/
+					</destinationFolder>
+					<contextFolder>${basedir}/src/main/webapp/</contextFolder>
+					<wroFile>${basedir}/src/main/webapp/WEB-INF/wro.xml</wroFile>
+					<wroManagerFactory>ro.isdc.wro.extensions.manager.standalone.GoogleStandaloneManagerFactory
+					</wroManagerFactory>
+					<ignoreMissingResources>false</ignoreMissingResources>
+				</configuration>
+			</plugin>
+			<!-- <plugin> <groupId>org.apache.cxf</groupId> <artifactId>cxf-codegen-plugin</artifactId> 
+				<version>${cxf.version}</version> <executions> <execution> <id>generate-sources</id> 
+				<phase>generate-sources</phase> <configuration> <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot> 
+				<wsdlOptions> <wsdlOption> <wsdl>${basedir}/src/main/wsdl/webService.wsdl</wsdl> 
+				<extraargs> <extraarg>-xjc-b,binding.xjb</extraarg> <extraarg>-xjc-Xts</extraarg> 
+				</extraargs> </wsdlOption> </wsdlOptions> </configuration> <goals> <goal>wsdl2java</goal> 
+				</goals> </execution> </executions> <dependencies> <dependency> <groupId>org.apache.cxf</groupId> 
+				<artifactId>cxf-xjc-ts</artifactId> <version>${cxf.version}</version> </dependency> 
+				</dependencies> </plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<version>2.7</version> <configuration> <show>private</show> <nohelp>true</nohelp> 
+				</configuration> </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>2.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>${jdbc.groupId}</groupId>
+						<artifactId>${jdbc.artifactId}</artifactId>
+						<version>${jdbc.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<components>
+						<component>
+							<name>hbm2ddl</name>
+							<implementation>annotationconfiguration</implementation>
+						</component>
+					</components>
+					<componentProperties>
+						<drop>true</drop>
+						<jdk5>true</jdk5>
+						<propertyfile>/src/main/resources/jdbc.properties   
+						</propertyfile>
+						<configurationfile>
+							/src/main/resources/hibernate.cfg.xml   
+			            </configurationfile>
+					</componentProperties>
+					<skip>${maven.test.skip}</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>hbm2ddl</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>dbunit-maven-plugin</artifactId> 
+				<version>1.0-beta-3</version> <executions> <execution> <id>test-compile</id> 
+				<phase>test-compile</phase> <goals> <goal>operation</goal> </goals> </execution> 
+				<execution> <id>test</id> <phase>test</phase> <goals> <goal>operation</goal> 
+				</goals> </execution> </executions> <dependencies> <dependency> <groupId>${jdbc.groupId}</groupId> 
+				<artifactId>${jdbc.artifactId}</artifactId> <version>${jdbc.version}</version> 
+				</dependency> </dependencies> <configuration> <dataTypeFactoryName>${dbunit.dataTypeFactoryName}</dataTypeFactoryName> 
+				<driver>${jdbc.driverClassName}</driver> <url>${jdbc.url}</url> <username>${jdbc.username}</username> 
+				<password>${jdbc.password}</password> <src>/src/main/resources/default-data.xml</src> 
+				<type>${dbunit.operation.type}</type> <skip>${maven.test.skip}</skip> </configuration> 
+				</plugin> -->
 		</plugins>
 	</build>
 	<reporting>
