@@ -270,6 +270,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Junit end -->
+		
 		<!-- Spring Test begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -278,6 +279,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Spring Test end -->
+		
 		<!-- Servlet & Jsp begin -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -292,6 +294,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- Servlet & Jsp end -->
+		
 		<!-- Tomcat Annotations begin -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -300,6 +303,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- Tomcat Annotations end -->
+		
 		<!-- lombok begin -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -308,6 +312,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- lombok end -->
+		
 		<!-- Jstl begin -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -320,6 +325,7 @@
 			<version>1.1.2</version>
 		</dependency>
 		<!-- Jstl end -->
+		
 		<!-- Jdbc Driver begin -->
 		<dependency>
 			<groupId>mysql</groupId>
