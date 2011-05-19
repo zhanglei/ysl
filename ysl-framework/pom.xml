@@ -101,6 +101,11 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>ysl-repo</id>
+			<name>ysl-repo</name>
+			<url>http://ysl-repo.googlecode.com/svn/repository</url>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
