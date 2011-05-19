@@ -24,6 +24,10 @@
 	<properties>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<spring-security.version>3.0.5.RELEASE</spring-security.version>
+		<jersey.version>1.5</jersey.version>
+		<jackson.version>1.7.3</jackson.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<wro4j.version>1.3.6</wro4j.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -43,6 +47,14 @@
 			<id>central</id>
 			<name>Maven Repository Switchboard</name>
 			<url>http://repo1.maven.org/maven2</url>
+		</repository>
+		<repository>
+			<id>java.net</id>
+			<name>Java.net Repository</name>
+			<url>http://download.java.net/maven/2/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -263,7 +275,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Junit end -->
-		
+
 		<!-- Spring Test begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -272,7 +284,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Spring Test end -->
-		
+
 		<!-- Servlet & Jsp begin -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -287,7 +299,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- Servlet & Jsp end -->
-		
+
 		<!-- Tomcat Annotations begin -->
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -296,7 +308,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- Tomcat Annotations end -->
-		
+
 		<!-- lombok begin -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -305,7 +317,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- lombok end -->
-		
+
 		<!-- Jstl begin -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -318,7 +330,7 @@
 			<version>1.1.2</version>
 		</dependency>
 		<!-- Jstl end -->
-		
+
 		<!-- Jdbc Driver begin -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -333,7 +345,7 @@
 		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc5</artifactId> 
 			<version>11.1.0.7.0</version> </dependency> -->
 		<!-- Jdbc Driver end -->
-		
+
 		<!-- Spring begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -380,7 +392,111 @@
 			<scope>runtime</scope>
 		</dependency>
 		<!-- Spring end -->
-		
+
+		<!-- database access begin -->
+		<!-- database access end -->
+
+		<!-- web begin -->
+		<!-- spring web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- json -->
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.3</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<!-- url rewrite -->
+		<dependency>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<!-- web end -->
+
+		<!-- rest begin -->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>${jersey.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.jettison</groupId>
+					<artifactId>jettison</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.jackson</groupId>
+					<artifactId>jackson-xc</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-spring</artifactId>
+			<version>${jersey.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- rest end -->
+
 		<!-- Spring Security begin -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -413,7 +529,7 @@
 			<version>2.0.5.RELEASE</version>
 		</dependency>
 		<!-- Spring Security end -->
-		
+
 		<!-- OAuth begin -->
 		<dependency>
 			<groupId>net.oauth.core</groupId>
@@ -421,15 +537,118 @@
 			<version>20100527</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-httpclient</groupId>
-			<artifactId>commons-httpclient</artifactId>
-			<version>3.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.codehaus.spring-security-oauth</groupId>
 			<artifactId>spring-security-oauth</artifactId>
 			<version>3.19</version>
 		</dependency>
 		<!-- OAuth end -->
+
+		<!-- Apache Commons utils begin -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<!-- Apache Commons utils end -->
+
+		<!-- logging begin -->
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- slf4j-log4j绑定 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- slf4j没有log4j的情形 -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- logging end -->
+
+		<!-- wro4j begin -->
+		<dependency>
+			<groupId>ro.isdc.wro4j</groupId>
+			<artifactId>wro4j-core</artifactId>
+			<version>${wro4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ro.isdc.wro4j</groupId>
+			<artifactId>wro4j-extensions</artifactId>
+			<version>${wro4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.yahoo.platform.yui</groupId>
+			<artifactId>yuicompressor</artifactId>
+			<version>2.4.2</version>
+		</dependency>
+		<!-- <dependency> <groupId>com.google.closure</groupId> <artifactId>compiler</artifactId> 
+			<version>r531</version> </dependency> -->
+		<!-- wro4j end -->
 	</dependencies>
 </project>
