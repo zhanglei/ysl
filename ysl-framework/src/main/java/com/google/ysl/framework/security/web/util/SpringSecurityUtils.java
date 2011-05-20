@@ -24,7 +24,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 
 /**
  * <p>Title: SpringSecurityUtils</p>
- * <p>Description: SpringSecurity�Ĺ�����</p>
+ * <p>Description: SpringSecurity的工具类.</p>
  * <p>Company: </p> 
  * @author zhanglei<zhanglei_job_email@163.com>
  * @date May 20, 2011
