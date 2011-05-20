@@ -9,6 +9,8 @@
  */
 package com.google.ysl.framework.common.hibernate;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  * <p>Title: BaseEntity</p>
  * <p>Description: </p>
@@ -17,6 +19,7 @@ package com.google.ysl.framework.common.hibernate;
  * @date May 9, 2011
  *
  */
+@MappedSuperclass
 public abstract class BaseEntity implements java.io.Serializable {
 
 	/**
