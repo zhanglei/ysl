@@ -13,6 +13,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -22,8 +23,6 @@ import javax.persistence.Version;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import com.google.ysl.framework.common.util.DateConvertUtils;
 
@@ -67,12 +66,11 @@ public abstract class IdEntity implements java.io.Serializable {
 	 * @Fields id : PK
 	 */
 	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false, length = 36, columnDefinition = "char(36)")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
 	@Getter
 	@Setter
-	private String id;
+	private Long id;
 
 	/**
 	 * @Fields version : Optimistic Locking
