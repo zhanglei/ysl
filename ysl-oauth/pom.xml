@@ -56,6 +56,11 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>ysl-repo</id>
+			<name>ysl-repo</name>
+			<url>http://ysl-repo.googlecode.com/svn/repository</url>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -342,8 +347,11 @@
 			<artifactId>jtds</artifactId>
 			<version>1.2.4</version>
 		</dependency>
-		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc5</artifactId> 
-			<version>11.1.0.7.0</version> </dependency> -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc5</artifactId>
+			<version>11.1.0.7.0</version>
+		</dependency>
 		<!-- Jdbc Driver end -->
 
 		<!-- Spring begin -->
@@ -647,8 +655,11 @@
 			<artifactId>yuicompressor</artifactId>
 			<version>2.4.2</version>
 		</dependency>
-		<!-- <dependency> <groupId>com.google.closure</groupId> <artifactId>compiler</artifactId> 
-			<version>r531</version> </dependency> -->
+		<dependency>
+			<groupId>com.google.closure</groupId>
+			<artifactId>compiler</artifactId>
+			<version>r531</version>
+		</dependency>
 		<!-- wro4j end -->
 	</dependencies>
 </project>
