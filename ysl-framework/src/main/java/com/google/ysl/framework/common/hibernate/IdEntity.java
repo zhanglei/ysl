@@ -9,7 +9,23 @@
  */
 package com.google.ysl.framework.common.hibernate;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.persistence.Version;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.google.ysl.framework.common.util.DateConvertUtils;
 
 /**
  * <p>Title: IdEntity</p>
@@ -46,5 +62,91 @@ public abstract class IdEntity implements java.io.Serializable {
 	 * @Fields TIMESTAMP_FORMAT : 
 	 */
 	protected static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
-	
+
+	/**
+	 * @Fields id : PK
+	 */
+	@Id
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false, length = 36, columnDefinition = "char(36)")
+	@Getter
+	@Setter
+	private String id;
+
+	/**
+	 * @Fields version : Optimistic Locking
+	 */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Version
+	@Column(name = "version", unique = false, nullable = false, insertable = true, updatable = true, length = 20)
+	@Getter
+	@Setter
+	private Date version;
+
+	/**
+	 * <p>Title: Constructor.</p>
+	 * <p>Description: </p>
+	 */
+	public IdEntity() {
+		super();
+	}
+
+	/**
+	 * <p>Title: convertDateToString</p>
+	 * <p>Description: </p>
+	 * @param date
+	 * @param dateFormat
+	 * @return
+	 * @return String
+	 * @throws
+	 *
+	 */
+	@Transient
+	public String convertDateToString(java.util.Date date, String dateFormat) {
+		return DateConvertUtils.format(date, dateFormat);
+	}
+
+	/**
+	 * <p>Title: convertStringToDate</p>
+	 * <p>Description: </p>
+	 * @param <T>
+	 * @param dateString
+	 * @param dateFormat
+	 * @param targetResultType
+	 * @return T
+	 * @throws
+	 *
+	 */
+	@Transient
+	public <T extends java.util.Date> T convertStringToDate(String dateString,
+			String dateFormat, Class<T> targetResultType) {
+		return DateConvertUtils.parse(dateString, dateFormat, targetResultType);
+	}
+
+	/**(non-Javadoc)
+	 * <p>Title: toString</p>
+	 * <p>Description: </p>
+	 * @return
+	 * @see java.lang.Object#toString()
+	 */
+	public abstract String toString();
+
+	/**(non-Javadoc)
+	 * <p>Title: equals</p>
+	 * <p>Description: </p>
+	 * @param o
+	 * @return
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public abstract boolean equals(Object o);
+
+	/**(non-Javadoc)
+	 * <p>Title: hashCode</p>
+	 * <p>Description: </p>
+	 * @return
+	 * @see java.lang.Object#hashCode()
+	 */
+	public abstract int hashCode();
+
 }
