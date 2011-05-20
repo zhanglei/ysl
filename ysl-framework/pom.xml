@@ -31,6 +31,7 @@
 		<jersey.version>1.5</jersey.version>
 		<jackson.version>1.7.3</jackson.version>
 		<slf4j.version>1.6.1</slf4j.version>
+		<atomikos.version>3.7.0</atomikos.version>
 
 		<dbunit.dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dbunit.dataTypeFactoryName>
 		<dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
@@ -156,7 +157,7 @@
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.0</version>
 				</plugin>
-				<!--TODO TEXT. This plugin's configuration is used in m2e only.-->
+				<!--TODO TEXT. This plugin's configuration is used in m2e only. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -384,39 +385,15 @@
 				</configuration>
 			</plugin>
 			<!-- yuicompressor插件 -->
-			<!-- 
-			<plugin>
-				<groupId>net.sf.alchim</groupId>
-				<artifactId>yuicompressor-maven-plugin</artifactId>
-				<version>0.7.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jslint</goal>
-							<goal>compress</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<aggregations></aggregations>
-					<disableOptimizations>false</disableOptimizations>
-					<encoding>UTF-8</encoding>
-					<excludes>
-						<exclude>**/*.xml</exclude>
-						<exclude>**/*.min.js</exclude>
-						<exclude>**/*-min*</exclude>
-					</excludes>
-					<failOnWarning>false</failOnWarning>
-					<force>false</force>
-					<gzip>false</gzip>
-					<jswarn>false</jswarn>
-					<linebreakpos>0</linebreakpos>
-					<nomunge>false</nomunge>
-					<nosuffix>false</nosuffix>
-					<suffix>-min</suffix>
-				</configuration>
-			</plugin>
-			 -->
+			<!-- <plugin> <groupId>net.sf.alchim</groupId> <artifactId>yuicompressor-maven-plugin</artifactId> 
+				<version>0.7.1</version> <executions> <execution> <goals> <goal>jslint</goal> 
+				<goal>compress</goal> </goals> </execution> </executions> <configuration> 
+				<aggregations></aggregations> <disableOptimizations>false</disableOptimizations> 
+				<encoding>UTF-8</encoding> <excludes> <exclude>**/*.xml</exclude> <exclude>**/*.min.js</exclude> 
+				<exclude>**/*-min*</exclude> </excludes> <failOnWarning>false</failOnWarning> 
+				<force>false</force> <gzip>false</gzip> <jswarn>false</jswarn> <linebreakpos>0</linebreakpos> 
+				<nomunge>false</nomunge> <nosuffix>false</nosuffix> <suffix>-min</suffix> 
+				</configuration> </plugin> -->
 			<plugin>
 				<groupId>ro.isdc.wro4j</groupId>
 				<artifactId>wro4j-maven-plugin</artifactId>
@@ -584,8 +561,11 @@
 			<artifactId>jtds</artifactId>
 			<version>1.2.4</version>
 		</dependency>
-		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc5</artifactId> 
-			<version>11.1.0.7.0</version> </dependency> -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc5</artifactId>
+			<version>11.1.0.7.0</version>
+		</dependency>
 		<!-- Jdbc Driver end -->
 
 		<!-- Spring begin -->
@@ -1132,13 +1112,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- 
 		<dependency>
 			<groupId>org.wltea</groupId>
 			<artifactId>IKAnalyzer</artifactId>
 			<version>3.2.8</version>
 		</dependency>
-		 -->
 
 		<!-- Apache Mina begin -->
 		<dependency>
@@ -1172,36 +1150,6 @@
 		</dependency>
 		<!-- email end -->
 
-		<dependency>
-			<groupId>org.perf4j</groupId>
-			<artifactId>perf4j</artifactId>
-			<version>0.9.14</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.lazyluke</groupId>
-			<artifactId>log4jdbc-remix</artifactId>
-			<version>0.2.4</version>
-		</dependency>
-
-		<!-- <dependency> <groupId>com.google.collections</groupId> <artifactId>google-collections</artifactId> 
-			<version>1.0</version> </dependency> -->
-		<!-- <dependency> <groupId>org.phprpc</groupId> <artifactId>phprpc</artifactId> 
-			<version>3.0.2</version> </dependency> -->
-
-		<dependency>
-			<groupId>net.sf.dozer</groupId>
-			<artifactId>dozer</artifactId>
-			<version>5.3.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.6.2</version>
-		</dependency>
-		<!-- <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> 
-			<version>r07</version> </dependency> -->
 		<!-- wro4j begin -->
 		<dependency>
 			<groupId>ro.isdc.wro4j</groupId>
@@ -1224,17 +1172,69 @@
 			<artifactId>yuicompressor</artifactId>
 			<version>2.4.2</version>
 		</dependency>
-		<!-- <dependency> <groupId>com.google.closure</groupId> <artifactId>compiler</artifactId> 
-			<version>r531</version> </dependency> -->
+		<dependency>
+			<groupId>com.google.closure</groupId>
+			<artifactId>compiler</artifactId>
+			<version>r531</version>
+		</dependency>
 		<!-- wro4j end -->
-		<!-- <dependency> <groupId>net.sourceforge.pinyin4j</groupId> <artifactId>pinyin4j</artifactId> 
-			<version>2.5.0</version> </dependency> -->
+
 		<!-- atomikos begin -->
-		<!-- <dependency> <groupId>com.atomikos</groupId> <artifactId>transactions-jta</artifactId> 
-			<version>${atomikos.version}</version> </dependency> <dependency> <groupId>com.atomikos</groupId> 
-			<artifactId>transactions-hibernate3</artifactId> <version>${atomikos.version}</version> 
-			</dependency> <dependency> <groupId>com.atomikos</groupId> <artifactId>transactions-jms</artifactId> 
-			<version>${atomikos.version}</version> </dependency> -->
+		<dependency>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jta</artifactId>
+			<version>${atomikos.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-hibernate3</artifactId>
+			<version>${atomikos.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jms</artifactId>
+			<version>${atomikos.version}</version>
+		</dependency>
 		<!-- atomikos end -->
+		
+		<dependency>
+			<groupId>org.perf4j</groupId>
+			<artifactId>perf4j</artifactId>
+			<version>0.9.14</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.lazyluke</groupId>
+			<artifactId>log4jdbc-remix</artifactId>
+			<version>0.2.4</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>com.google.collections</groupId> <artifactId>google-collections</artifactId> 
+			<version>1.0</version> </dependency> -->
+		<dependency>
+			<groupId>org.phprpc</groupId>
+			<artifactId>phprpc</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>5.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+		<!-- <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> 
+			<version>r07</version> </dependency> -->
+
+		<dependency>
+			<groupId>net.sourceforge.pinyin4j</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>2.5.0</version>
+		</dependency>
 	</dependencies>
 </project>
