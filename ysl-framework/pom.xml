@@ -407,7 +407,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<targetGroups>all,global,core,main,util,widgets,validation,jquery-ui,accordion,messager,grid
+					<targetGroups>all,global
 					</targetGroups>
 					<minimize>true</minimize>
 					<destinationFolder>${project.build.directory}/${project.build.finalName}/wro/
@@ -1196,7 +1196,7 @@
 			<version>${atomikos.version}</version>
 		</dependency>
 		<!-- atomikos end -->
-		
+
 		<dependency>
 			<groupId>org.perf4j</groupId>
 			<artifactId>perf4j</artifactId>
