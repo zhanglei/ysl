@@ -8,13 +8,13 @@
 				margin: 0;
 				font:12px/1 "sans serif",tahoma,verdana,helvetica;
 				background-color:#F0F0EE;
-				color:#222222;
+				color:#333;
 				text-align:center;
 			}
 			#textArea {
 				width:98%;
 				height:260px;
-				border:1px solid #222222;
+				border:1px solid #A5A5A5;
 				overflow: auto;
 				resize: none;
 			}
@@ -30,8 +30,10 @@
 			var KE = parent.KindEditor;
 			var id = KE.util.getParam(location.href, 'id');
 			KE.event.ready(function() {
+				var textarea = KE.$('textArea', document);
 				KE.util.pluginLang('plainpaste', document);
 				KE.util.hideLoadingPage(id);
+				textarea.focus();
 			}, window, document);
 		</script>
 	</head>

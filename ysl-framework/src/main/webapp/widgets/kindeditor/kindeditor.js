@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @site http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 3.5.4 (2011-05-01)
+* @version 3.5.5 (2011-05-22)
 *******************************************************************************/
 
 (function (undefined) {
@@ -14,7 +14,7 @@ if (window.KindEditor !== undefined) return;
 
 var KE = {};
 
-KE.version = '3.5.4 (2011-05-01)';
+KE.version = '3.5.5 (2011-05-22)';
 
 KE.scriptPath = (function() {
 	var elements = document.getElementsByTagName('script');
@@ -623,7 +623,8 @@ KE.range = function(doc) {
 		var startPos = this.startPos;
 		var endNode = this.endNode;
 		var endPos = this.endPos;
-		var extractTextNode = function(node, startPos, endPos) {
+		var removedNodes = [];
+		function extractTextNode(node, startPos, endPos) {
 			var length = node.nodeValue.length;
 			var cloneNode = node.cloneNode(true);
 			var centerNode = cloneNode.splitText(startPos);
@@ -632,14 +633,14 @@ KE.range = function(doc) {
 				var center = node;
 				if (startPos > 0) center = node.splitText(startPos);
 				if (endPos < length) center.splitText(endPos - startPos);
-				center.parentNode.removeChild(center);
+				removedNodes.push(center);
 			}
 			return centerNode;
 		};
 		var noEndTagHash = KE.util.arrayToHash(KE.setting.noEndTags);
 		var isStarted = false;
 		var isEnd = false;
-		var extractNodes = function(parent, frag) {
+		function extractNodes(parent, frag) {
 			if (KE.util.getNodeType(parent) != 1) return true;
 			var node = parent.firstChild;
 			while (node) {
@@ -695,6 +696,11 @@ KE.range = function(doc) {
 		var parentNode = this.getParentElement();
 		var docFrag = parentNode.cloneNode(false);
 		extractNodes(parentNode, docFrag);
+		KE.each(removedNodes, function(key, val) {
+			if (val.nodeType != 3 || val.nodeValue.length > 0) {
+				val.parentNode.removeChild(val);
+			}
+		});
 		return docFrag;
 	};
 	this.cloneContents = function() {
@@ -1143,6 +1149,13 @@ KE.format = {
 		};
 		return KE.util.trim(trimHtml(html));
 	}
+};
+
+KE.attr = function(el, key, val) {
+	if (KE.browser.IE && KE.browser.VERSION < 8 && key.toLowerCase() == 'class') key = 'className';
+	val = '' + val;
+	el.setAttribute(key, val);
+	if (val === '') el.removeAttribute(key);
 };
 
 KE.addClass = function(el, className) {
@@ -1797,7 +1810,7 @@ KE.util = {
 		else html += imgStr;
 		if (KE.browser.IE) {
 			if (g.range.item) g.range.item(0).outerHTML = html;
-			else g.range.pasteHTML('\u200B' + html);
+			else g.range.pasteHTML(html);
 		} else {
 			g.range.deleteContents();
 			var frag = g.range.createContextualFragment(html);
@@ -1828,9 +1841,11 @@ KE.util = {
 					this.innerHtml(parent, html + parent.innerHTML);
 				}
 			} else {
-				g.range.pasteHTML('\u200B' + html);
+				g.range.pasteHTML('<span id="__ke_temp_tag__">\u200B</span>' + html);
+				var node = KE.$('__ke_temp_tag__', g.iframeDoc);
+				node.parentNode.removeChild(node);
 			}
-		} else if (KE.browser.GECKO && KE.browser.VERSION < 3) {
+		} else if (KE.browser.GECKO) {
 			this.execCommand(id, 'inserthtml', html);
 			return;
 		} else {
@@ -2166,6 +2181,23 @@ KE.menu = function(arg){
 	};
 };
 
+KE.button = function(arg) {
+	arg = arg || {};
+	doc = arg.doc || document;
+	var span = KE.$$('span', doc);
+	span.className = 'ke-button-common ke-button-outer ' + (arg.className || '');
+	span.title = arg.text;
+	btn = KE.$$('input', doc);
+	btn.className = 'ke-button-common ke-button';
+	btn.type = 'button';
+	btn.value = arg.text || '';
+	if (arg.clickFn) {
+		btn.onclick = arg.clickFn;
+	}
+	span.appendChild(btn);
+	return {span : span, btn : btn};
+}
+
 KE.dialog = function(arg){
 	var self = this;
 	this.widthMargin = 30;
@@ -2250,36 +2282,16 @@ KE.dialog = function(arg){
 		var pos = getPos.call(this);
 		div.style.top = pos.y + 'px';
 		div.style.left = pos.x + 'px';
-		var contentCell;
 		if (KE.g[id].shadowMode) {
-			var table = KE.$$('table');
-			table.className = 'ke-dialog-table';
-			table.cellPadding = 0;
-			table.cellSpacing = 0;
-			table.border = 0;
-			var rowNames = ['t', 'm', 'b'];
-			var colNames = ['l', 'c', 'r'];
-			for (var i = 0, len = 3; i < len; i++) {
-				var row = table.insertRow(i);
-				for (var j = 0, l = 3; j < l; j++) {
-					var cell = row.insertCell(j);
-					cell.className = 'ke-' + rowNames[i] + colNames[j];
-					if (i == 1 && j == 1) contentCell = cell;
-					else cell.innerHTML = '<span class="ke-dialog-empty"></span>';
-				}
-			}
-			div.appendChild(table);
+			KE.addClass(div, 'ke-dialog-shadow');
 		} else {
 			KE.addClass(div, 'ke-dialog-no-shadow');
-			contentCell = div;
 		}
 		var titleDiv = KE.$$('div');
 		titleDiv.className = 'ke-dialog-title';
 		titleDiv.innerHTML = arg.title;
 		var span = KE.$$('span');
 		span.className = 'ke-dialog-close';
-		if (KE.g[id].shadowMode) KE.addClass(span, 'ke-dialog-close-shadow');
-		else KE.addClass(span, 'ke-dialog-close-no-shadow');
 		span.alt = KE.lang['close'];
 		span.title = KE.lang['close'];
 		span.onclick = function () {
@@ -2300,7 +2312,7 @@ KE.dialog = function(arg){
 			div.style.top = top + 'px';
 			div.style.left = left + 'px';
 		});
-		contentCell.appendChild(titleDiv);
+		div.appendChild(titleDiv);
 		var bodyDiv = KE.$$('div');
 		bodyDiv.className = 'ke-dialog-body';
 		var loadingTable = KE.util.createTable();
@@ -2322,60 +2334,66 @@ KE.dialog = function(arg){
 		iframe.style.display = 'none';
 		bodyDiv.appendChild(iframe);
 		bodyDiv.appendChild(loadingTable.table);
-		contentCell.appendChild(bodyDiv);
-
+		div.appendChild(bodyDiv);
 		var bottomDiv = KE.$$('div');
 		bottomDiv.className = 'ke-dialog-bottom';
 		var noButton = null;
 		var yesButton = null;
 		var previewButton = null;
 		if (arg.previewButton) {
-			previewButton = KE.$$('input');
-			previewButton.className = 'ke-button ke-dialog-preview';
-			previewButton.type = 'button';
-			previewButton.name = 'previewButton';
-			previewButton.value = arg.previewButton;
-			previewButton.onclick = function() {
-				var stack = KE.g[id].dialogStack;
-				if (stack[stack.length - 1] == self) {
-					KE.plugin[arg.cmd].preview(id);
+			var btn = KE.button({
+				className : 'ke-dialog-preview',
+				text : arg.previewButton,
+				clickFn : function() {
+					var stack = KE.g[id].dialogStack;
+					if (stack[stack.length - 1] == self) {
+						if (arg.previewClickFn) {
+							arg.previewClickFn(id);
+						} else {
+							KE.plugin[arg.cmd].preview(id);
+						}
+					}
 				}
-			};
-			bottomDiv.appendChild(previewButton);
+			});
+			previewButton = btn.btn;
+			bottomDiv.appendChild(btn.span);
 		}
 		if (arg.yesButton) {
-			yesButton = KE.$$('input');
-			yesButton.className = 'ke-button ke-dialog-yes';
-			yesButton.type = 'button';
-			yesButton.name = 'yesButton';
-			yesButton.value = arg.yesButton;
-			yesButton.onclick = function() {
-				var stack = KE.g[id].dialogStack;
-				if (stack[stack.length - 1] == self) {
-					KE.plugin[arg.cmd].exec(id);
+			var btn = KE.button({
+				className : 'ke-dialog-yes',
+				text : arg.yesButton,
+				clickFn : function() {
+					var stack = KE.g[id].dialogStack;
+					if (stack[stack.length - 1] == self) {
+						if (arg.yesClickFn) {
+							arg.yesClickFn(id);
+						} else {
+							KE.plugin[arg.cmd].exec(id);
+						}
+					}
 				}
-			};
-			bottomDiv.appendChild(yesButton);
+			});
+			yesButton = btn.btn;
+			bottomDiv.appendChild(btn.span);
 		}
 		if (arg.noButton) {
-			noButton = KE.$$('input');
-			noButton.className = 'ke-button ke-dialog-no';
-			noButton.type = 'button';
-			noButton.name = 'noButton';
-			noButton.value = arg.noButton;
-			noButton.onclick = function () {
-				self.hide();
-				KE.util.select(id);
-			};
-			bottomDiv.appendChild(noButton);
+			var btn = KE.button({
+				className : 'ke-dialog-no',
+				text : arg.noButton,
+				clickFn : function() {
+					self.hide();
+					KE.util.select(id);
+				}
+			});
+			noButton = btn.btn;
+			bottomDiv.appendChild(btn.span);
 		}
 		if (arg.yesButton || arg.noButton || arg.previewButton) {
-			contentCell.appendChild(bottomDiv);
+			div.appendChild(bottomDiv);
 		}
 		document.body.appendChild(div);
+		KE.event.bind(div, 'mousedown', function(e){}, id);
 		window.focus();
-		if (yesButton) yesButton.focus();
-		else if (noButton) noButton.focus();
 		if (arg.html !== undefined) {
 			var dialogDoc = KE.util.getIframeDoc(iframe);
 			var html = KE.util.getFullHtml(id);
@@ -3063,6 +3081,7 @@ KE.lang = {
 	print : '打印',
 	fileManager : '浏览服务器',
 	advtable : '表格',
+	tablecell : '单元格',
 	yes : '确定',
 	no : '取消',
 	close : '关闭',
@@ -3071,6 +3090,7 @@ KE.lang = {
 	editLink : '超级链接属性',
 	deleteLink : '取消超级链接',
 	tableprop : '表格属性',
+	tablecellprop : '单元格属性',
 	tableinsert : '插入表格',
 	tabledelete : '删除表格',
 	tablecolinsertleft : '左侧插入列',
@@ -3166,7 +3186,7 @@ plugins.advtable = {
 	cells : '单元格数',
 	rows : '行数',
 	cols : '列数',
-	size : '表格大小',
+	size : '大小',
 	width : '宽度',
 	height : '高度',
 	percent : '%',
@@ -3175,11 +3195,17 @@ plugins.advtable = {
 	padding : '边距',
 	spacing : '间距',
 	align : '对齐方式',
+	textAlign : '水平对齐',
+	verticalAlign : '垂直对齐',
 	alignDefault : '默认',
 	alignLeft : '左对齐',
 	alignCenter : '居中',
 	alignRight : '右对齐',
-	border : '表格边框',
+	alignTop : '顶部',
+	alignMiddle : '中部',
+	alignBottom : '底部',
+	alignBaseline : '基线',
+	border : '边框',
 	borderWidth : '边框',
 	borderColor : '颜色',
 	backgroundColor : '背景颜色'
@@ -3214,7 +3240,7 @@ plugins.fontname = {
 
 (function (KE, undefined) {
 
-KE.plugin['about'] = {
+KE.plugin.about = {
 	click : function(id) {
 		KE.util.selection(id);
 		var dialog = new KE.dialog({
@@ -3231,7 +3257,7 @@ KE.plugin['about'] = {
 	}
 };
 
-KE.plugin['undo'] = {
+KE.plugin.undo = {
 	init : function(id) {
 		KE.event.ctrl(KE.g[id].iframeDoc, 'Z', function(e) {
 			KE.plugin['undo'].click(id);
@@ -3248,7 +3274,7 @@ KE.plugin['undo'] = {
 	}
 };
 
-KE.plugin['redo'] = {
+KE.plugin.redo = {
 	init : function(id) {
 		KE.event.ctrl(KE.g[id].iframeDoc, 'Y', function(e) {
 			KE.plugin['redo'].click(id);
@@ -3265,7 +3291,7 @@ KE.plugin['redo'] = {
 	}
 };
 
-KE.plugin['cut'] = {
+KE.plugin.cut = {
 	click : function(id) {
 		try {
 			if (!KE.g[id].iframeDoc.queryCommandSupported('cut')) throw 'e';
@@ -3277,7 +3303,7 @@ KE.plugin['cut'] = {
 	}
 };
 
-KE.plugin['copy'] = {
+KE.plugin.copy = {
 	click : function(id) {
 		try {
 			if (!KE.g[id].iframeDoc.queryCommandSupported('copy')) throw 'e';
@@ -3289,7 +3315,7 @@ KE.plugin['copy'] = {
 	}
 };
 
-KE.plugin['paste'] = {
+KE.plugin.paste = {
 	click : function(id) {
 		try {
 			if (!KE.g[id].iframeDoc.queryCommandSupported('paste')) throw 'e';
@@ -3301,7 +3327,7 @@ KE.plugin['paste'] = {
 	}
 };
 
-KE.plugin['plainpaste'] = {
+KE.plugin.plainpaste = {
 	click : function(id) {
 		KE.util.selection(id);
 		this.dialog = new KE.dialog({
@@ -3333,7 +3359,7 @@ KE.plugin['plainpaste'] = {
 	}
 };
 
-KE.plugin['wordpaste'] = {
+KE.plugin.wordpaste = {
 	click : function(id) {
 		KE.util.selection(id);
 		this.dialog = new KE.dialog({
@@ -3368,7 +3394,7 @@ KE.plugin['wordpaste'] = {
 	}
 };
 
-KE.plugin['fullscreen'] = {
+KE.plugin.fullscreen = {
 	click : function(id) {
 		var g = KE.g[id];
 		var self = this;
@@ -3421,7 +3447,7 @@ KE.plugin['fullscreen'] = {
 	}
 };
 
-KE.plugin['bgcolor'] = {
+KE.plugin.bgcolor = {
 	click : function(id) {
 		KE.util.selection(id);
 		var color = KE.queryCommandValue(KE.g[id].iframeDoc, 'bgcolor');
@@ -3446,7 +3472,7 @@ KE.plugin['bgcolor'] = {
 	}
 };
 
-KE.plugin['fontname'] = {
+KE.plugin.fontname = {
 	click : function(id) {
 		var fontName = KE.lang.plugins.fontname.fontName;
 		var cmd = 'fontname';
@@ -3477,7 +3503,7 @@ KE.plugin['fontname'] = {
 	}
 };
 
-KE.plugin['fontsize'] = {
+KE.plugin.fontsize = {
 	click : function(id) {
 		var fontSize = ['9px', '10px', '12px', '14px', '16px', '18px', '24px', '32px'];
 		var cmd = 'fontsize';
@@ -3516,7 +3542,7 @@ KE.plugin['fontsize'] = {
 	}
 };
 
-KE.plugin['hr'] = {
+KE.plugin.hr = {
 	click : function(id) {
 		KE.util.selection(id);
 		KE.util.insertHtml(id, '<hr />');
@@ -3524,14 +3550,14 @@ KE.plugin['hr'] = {
 	}
 };
 
-KE.plugin['print'] = {
+KE.plugin.print = {
 	click : function(id) {
 		KE.util.selection(id);
 		KE.g[id].iframeWin.print();
 	}
 };
 
-KE.plugin['removeformat'] = {
+KE.plugin.removeformat = {
 	click : function(id) {
 		KE.util.selection(id);
 		var cmd = new KE.cmd(id);
@@ -3548,7 +3574,7 @@ KE.plugin['removeformat'] = {
 	}
 };
 
-KE.plugin['source'] = {
+KE.plugin.source = {
 	click : function(id) {
 		var g = KE.g[id];
 		if (!g.wyswygMode) {
@@ -3573,7 +3599,7 @@ KE.plugin['source'] = {
 	}
 };
 
-KE.plugin['textcolor'] = {
+KE.plugin.textcolor = {
 	click : function(id) {
 		KE.util.selection(id);
 		var color = KE.queryCommandValue(KE.g[id].iframeDoc, 'textcolor');
@@ -3599,7 +3625,7 @@ KE.plugin['textcolor'] = {
 	}
 };
 
-KE.plugin['title'] = {
+KE.plugin.title = {
 	click : function(id) {
 		var lang = KE.lang.plugins.title;
 		var title = {
@@ -3647,7 +3673,7 @@ KE.plugin['title'] = {
 	}
 };
 
-KE.plugin['emoticons'] = {
+KE.plugin.emoticons = {
 	click : function(id) {
 		var self = this,
 			cmd = 'emoticons',
@@ -3767,14 +3793,14 @@ KE.plugin['emoticons'] = {
 	},
 	exec : function(id, num) {
 		var src = KE.g[id].pluginsPath + 'emoticons/' + num + '.gif';
-		var html = '<img src="' + src + '" kesrc="' + src + '" border="0" alt="" />';
+		var html = '<img src="' + src + '" kesrc="' + src + '" alt="" />';
 		KE.util.insertHtml(id, html);
 		this.menu.hide();
 		KE.util.focus(id);
 	}
 };
 
-KE.plugin['flash'] = {
+KE.plugin.flash = {
 	init : function(id) {
 		var self = this;
 		KE.g[id].getHtmlHooks.push(function(html) {
@@ -3859,7 +3885,7 @@ KE.plugin['flash'] = {
 	}
 };
 
-KE.plugin['image'] = {
+KE.plugin.image = {
 	getSelectedNode : function(id) {
 		var g = KE.g[id];
 		var startNode = g.keRange.startNode;
@@ -4005,14 +4031,15 @@ KE.plugin['image'] = {
 		if (title) html += 'title="' + title + '" ';
 		if (align) html += 'align="' + align + '" ';
 		html += 'alt="' + title + '" ';
-		html += 'border="' + border + '" />';
+		if (border) html += 'border="' + border + '" ';
+		html += '/>';
 		KE.util.insertHtml(id, html);
 		this.dialog.hide();
 		KE.util.focus(id);
 	}
 };
 
-KE.plugin['link'] = {
+KE.plugin.link = {
 	getSelectedNode : function(id) {
 		return KE.getCommonAncestor(KE.g[id].keSel, 'a');
 	},
@@ -4115,7 +4142,7 @@ KE.plugin['link'] = {
 	}
 };
 
-KE.plugin['unlink'] = {
+KE.plugin.unlink = {
 	init : function(id) {
 		var self = this;
 		KE.g[id].contextmenuItems.push({
@@ -4169,7 +4196,7 @@ KE.plugin['unlink'] = {
 	}
 };
 
-KE.plugin['media'] = {
+KE.plugin.media = {
 	init : function(id) {
 		var self = this;
 		var typeHash = {};
@@ -4261,7 +4288,7 @@ KE.plugin['media'] = {
 	}
 };
 
-KE.plugin['advtable'] = {
+KE.plugin.advtable = {
 	getSelectedTable : function(id) {
 		return KE.getCommonAncestor(KE.g[id].keSel, 'table');
 	},
@@ -4273,6 +4300,70 @@ KE.plugin['advtable'] = {
 	},
 	tableprop : function(id) {
 		this.click(id);
+	},
+	tablecellprop : function(id) {
+		var self = this;
+		KE.util.selection(id);
+		var dialog = new KE.dialog({
+			id : id,
+			cmd : 'advtable',
+			file : 'advtable/cell.html',
+			width : 420,
+			height : 150,
+			loadingMode : true,
+			title : KE.lang['tablecell'],
+			yesButton : KE.lang['yes'],
+			noButton : KE.lang['no'],
+			yesClickFn : function(id) {
+				var dialogDoc = KE.util.getIframeDoc(dialog.iframe),
+					widthBox = KE.$('width', dialogDoc),
+					heightBox = KE.$('height', dialogDoc),
+					widthTypeBox = KE.$('widthType', dialogDoc),
+					heightTypeBox = KE.$('heightType', dialogDoc),
+					textAlignBox = KE.$('textAlign', dialogDoc),
+					verticalAlignBox = KE.$('verticalAlign', dialogDoc),
+					borderBox = KE.$('border', dialogDoc),
+					borderColorBox = KE.$('borderColor', dialogDoc),
+					backgroundColorBox = KE.$('backgroundColor', dialogDoc),
+					width = widthBox.value,
+					height = heightBox.value,
+					widthType = widthTypeBox.value,
+					heightType = heightTypeBox.value,
+					textAlign = textAlignBox.value,
+					verticalAlign = verticalAlignBox.value,
+					border = borderBox.value,
+					borderColor = borderColorBox.innerHTML,
+					backgroundColor = backgroundColorBox.innerHTML;
+				if (!width.match(/^\d*$/)) {
+					alert(KE.lang['invalidWidth']);
+					widthBox.focus();
+					return false;
+				}
+				if (!height.match(/^\d*$/)) {
+					alert(KE.lang['invalidHeight']);
+					heightBox.focus();
+					return false;
+				}
+				if (!border.match(/^\d*$/)) {
+					alert(KE.lang['invalidBorder']);
+					borderBox.focus();
+					return false;
+				}
+				var cell = self.getSelectedCell(id);
+				cell.style.width = width !== '' ? (width + widthType) : '';
+				cell.style.height = height !== '' ? (height + heightType) : '';
+				cell.style.backgroundColor = backgroundColor;
+				cell.style.textAlign = textAlign;
+				cell.style.verticalAlign = verticalAlign;
+				cell.style.borderWidth = border;
+				cell.style.borderStyle = border !== '' ? 'solid' : '';
+				cell.style.borderColor = borderColor;
+				KE.util.execOnchangeHandler(id);
+				dialog.hide();
+				KE.util.focus(id);
+			}
+		});
+		dialog.show();
 	},
 	tableinsert : function(id) {
 		this.click(id, 'insert');
@@ -4327,7 +4418,7 @@ KE.plugin['advtable'] = {
 	init : function(id) {
 		var self = this;
 		var zeroborder = 'ke-zeroborder';
-		var tableCmds = 'prop,colinsertleft,colinsertright,rowinsertabove,rowinsertbelow,coldelete,rowdelete,insert,delete'.split(',');
+		var tableCmds = 'prop,cellprop,colinsertleft,colinsertright,rowinsertabove,rowinsertbelow,coldelete,rowdelete,insert,delete'.split(',');
 		for (var i = 0, len = tableCmds.length; i < len; i++) {
 			var name = 'table' + tableCmds[i];
 			KE.g[id].contextmenuItems.push({
@@ -4393,33 +4484,33 @@ KE.plugin['advtable'] = {
 		this.dialog.show();
 	},
 	exec : function(id) {
-		var zeroborder = 'ke-zeroborder';
-		var dialogDoc = KE.util.getIframeDoc(this.dialog.iframe);
-		var modeBox = KE.$('mode', dialogDoc);
-		var rowsBox = KE.$('rows', dialogDoc);
-		var colsBox = KE.$('cols', dialogDoc);
-		var widthBox = KE.$('width', dialogDoc);
-		var heightBox = KE.$('height', dialogDoc);
-		var widthTypeBox = KE.$('widthType', dialogDoc);
-		var heightTypeBox = KE.$('heightType', dialogDoc);
-		var paddingBox = KE.$('padding', dialogDoc);
-		var spacingBox = KE.$('spacing', dialogDoc);
-		var alignBox = KE.$('align', dialogDoc);
-		var borderBox = KE.$('border', dialogDoc);
-		var borderColorBox = KE.$('borderColor', dialogDoc);
-		var backgroundColorBox = KE.$('backgroundColor', dialogDoc);
-		var rows = rowsBox.value;
-		var cols = colsBox.value;
-		var width = widthBox.value;
-		var height = heightBox.value;
-		var widthType = widthTypeBox.value;
-		var heightType = heightTypeBox.value;
-		var padding = paddingBox.value;
-		var spacing = spacingBox.value;
-		var align = alignBox.value;
-		var border = borderBox.value;
-		var borderColor = borderColorBox.innerHTML;
-		var backgroundColor = backgroundColorBox.innerHTML;
+		var zeroborder = 'ke-zeroborder',
+			dialogDoc = KE.util.getIframeDoc(this.dialog.iframe),
+			modeBox = KE.$('mode', dialogDoc),
+			rowsBox = KE.$('rows', dialogDoc),
+			colsBox = KE.$('cols', dialogDoc),
+			widthBox = KE.$('width', dialogDoc),
+			heightBox = KE.$('height', dialogDoc),
+			widthTypeBox = KE.$('widthType', dialogDoc),
+			heightTypeBox = KE.$('heightType', dialogDoc),
+			paddingBox = KE.$('padding', dialogDoc),
+			spacingBox = KE.$('spacing', dialogDoc),
+			alignBox = KE.$('align', dialogDoc),
+			borderBox = KE.$('border', dialogDoc),
+			borderColorBox = KE.$('borderColor', dialogDoc),
+			backgroundColorBox = KE.$('backgroundColor', dialogDoc),
+			rows = rowsBox.value,
+			cols = colsBox.value,
+			width = widthBox.value,
+			height = heightBox.value,
+			widthType = widthTypeBox.value,
+			heightType = heightTypeBox.value,
+			padding = paddingBox.value,
+			spacing = spacingBox.value,
+			align = alignBox.value,
+			border = borderBox.value,
+			borderColor = borderColorBox.innerHTML,
+			backgroundColor = backgroundColorBox.innerHTML;
 		if (rows == '' || rows == 0 || !rows.match(/^\d*$/)) {
 			alert(KE.lang['invalidRows']);
 			rowsBox.focus();
@@ -4457,60 +4548,22 @@ KE.plugin['advtable'] = {
 		}
 		if (modeBox.value === 'update') {
 			var table = this.getSelectedTable(id);
-			if (width !== '') {
-				table.style.width = width + widthType;
-			} else if (table.style.width) {
-				table.style.width = '';
-			}
-			if (table.width !== undefined) {
-				table.removeAttribute('width');
-			}
-			if (height !== '') {
-				table.style.height = height + heightType;
-			} else if (table.style.height) {
-				table.style.height = '';
-			}
-			if (table.height !== undefined) {
-				table.removeAttribute('height');
-			}
-			if (backgroundColor !== '') {
-				table.style.backgroundColor = backgroundColor;
-			} else if (table.style.backgroundColor) {
-				table.style.backgroundColor = '';
-			}
-			if (table.bgColor !== undefined) {
-				table.removeAttribute('bgColor');
-			}
-			if (padding !== '') {
-				table.cellPadding = padding;
-			} else {
-				table.removeAttribute('cellPadding');
-			}
-			if (spacing !== '') {
-				table.cellSpacing = spacing;
-			} else {
-				table.removeAttribute('cellSpacing');
-			}
-			if (align !== '') {
-				table.align = align;
-			} else {
-				table.removeAttribute('align');
-			}
+			table.style.width = width !== '' ? (width + widthType) : '';
+			table.style.height = height !== '' ? (height + heightType) : '';
+			table.style.backgroundColor = backgroundColor;
+			KE.attr(table, 'width', '');
+			KE.attr(table, 'height', '');
+			KE.attr(table, 'bgColor', '');
+			KE.attr(table, 'cellPadding', padding);
+			KE.attr(table, 'cellSpacing', spacing);
+			KE.attr(table, 'align', align);
 			if (border === '' || border === '0') {
 				KE.addClass(table, zeroborder);
 			} else {
 				KE.removeClass(table, zeroborder);
 			}
-			if (border !== '') {
-				table.setAttribute('border', border);
-			} else {
-				table.removeAttribute('border');
-			}
-			if (borderColor !== '') {
-				table.setAttribute('borderColor', borderColor);
-			} else {
-				table.removeAttribute('borderColor');
-			}
+			KE.attr(table, 'border', border);
+			KE.attr(table, 'borderColor', borderColor);
 			KE.util.execOnchangeHandler(id);
 		} else {
 			var style = '';
