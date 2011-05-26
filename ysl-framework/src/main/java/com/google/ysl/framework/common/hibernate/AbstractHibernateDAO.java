@@ -9,6 +9,13 @@
  */
 package com.google.ysl.framework.common.hibernate;
 
+import lombok.Getter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.ysl.framework.common.util.ReflectionUtils;
+
 /**
  * <p>Title: AbstractHibernateDAO</p>
  * <p>Description: </p>
@@ -18,5 +25,26 @@ package com.google.ysl.framework.common.hibernate;
  *
  */
 public class AbstractHibernateDAO<T, PK> {
+
+	/**
+	 * @Fields logger : 
+	 */
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+
+	/**
+	 * @Fields persistentClass : 
+	 */
+	@Getter
+	private Class<T> persistentClass;
+
+	/**
+	 * <p>Title: Constructor.</p>
+	 * <p>Description: </p>
+	 */
+	public AbstractHibernateDAO() {
+		super();
+		this.persistentClass = ReflectionUtils
+				.getSuperClassGenricType(getClass());
+	}
 
 }
