@@ -9,6 +9,7 @@
  */
 package com.google.ysl.framework.common.hibernate;
 
+
 /**
  * <p>Title: HibernateDAO</p>
  * <p>Description: </p>
@@ -17,6 +18,6 @@ package com.google.ysl.framework.common.hibernate;
  * @date May 26, 2011
  *
  */
-public interface HibernateDAO {
+public interface HibernateDAO<T, PK> {
 
 }

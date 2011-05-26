@@ -17,6 +17,6 @@ package com.google.ysl.framework.common.hibernate;
  * @date May 26, 2011
  *
  */
-public class AbstractHibernateDAO {
+public class AbstractHibernateDAO<T, PK> {
 
 }
