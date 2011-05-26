@@ -1244,5 +1244,18 @@
 			<artifactId>pinyin4j</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+		
+		<!-- mongodb begin -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>2.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code</groupId>
+			<artifactId>morphia</artifactId>
+			<version>0.91</version>
+		</dependency>
+		<!-- mongodb end -->
 	</dependencies>
 </project>
