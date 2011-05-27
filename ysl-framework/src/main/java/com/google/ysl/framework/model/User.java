@@ -16,6 +16,11 @@ import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -37,52 +42,55 @@ public class User extends BaseEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "name", unique = true, nullable = false, insertable = true, updatable = true, length = 50)
+	@Getter
+	@Setter
 	private String name;
 
 	@Column(name = "password", unique = false, nullable = false, insertable = true, updatable = true, length = 32, columnDefinition = "char(32)")
+	@Getter
+	@Setter
 	private String password;
 
-	@Column(name = "SALT", unique = false, nullable = false, insertable = true, updatable = true)
+	@Column(name = "salt", unique = false, nullable = false, insertable = true, updatable = true)
+	@Getter
+	@Setter
 	private Integer salt;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_time", unique = false, nullable = false, insertable = true, updatable = true, length = 20)
+	@Getter
+	@Setter
 	private Date createTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_login_time", unique = false, nullable = true, insertable = true, updatable = true, length = 20)
+	@Getter
+	@Setter
 	private Date lastLoginTime;
 
 	@Column(name = "last_login_ip", unique = false, nullable = true, insertable = true, updatable = true, length = 50)
+	@Getter
+	@Setter
 	private String lastLoginIp;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "current_login_time", unique = false, nullable = true, insertable = true, updatable = true, length = 20)
+	@Getter
+	@Setter
 	private Date currentLoginTime;
 
 	@Column(name = "current_login_ip", unique = false, nullable = true, insertable = true, updatable = true, length = 50)
 	private String currentLoginIp;
 
 	@Column(name = "login_count", unique = false, nullable = true, insertable = true, updatable = true)
+	@Getter
+	@Setter
 	private Integer loginCount;
 
 	@Column(name = "is_disabled", unique = false, nullable = false, insertable = true, updatable = true)
+	@Getter
+	@Setter
 	private Boolean disabled;
-
-	@Override
-	public String toString() {
-		return null;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
 
 	public Collection<GrantedAuthority> getAuthorities() {
 		return null;
@@ -112,4 +120,18 @@ public class User extends BaseEntity implements UserDetails {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return null;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 }
