@@ -20,9 +20,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.hibernate.annotations.GenericGenerator;
 
 import com.google.ysl.framework.common.util.DateConvertUtils;
@@ -78,8 +75,6 @@ public abstract class BaseEntity implements java.io.Serializable {
 	@GeneratedValue(generator = "system-uuid")
 	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false, length = 36, columnDefinition = "char(32)")
-	@Getter
-	@Setter
 	private String id;
 
 	/**
@@ -88,8 +83,6 @@ public abstract class BaseEntity implements java.io.Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Version
 	@Column(name = "version", unique = false, nullable = false, insertable = true, updatable = true, length = 20)
-	@Getter
-	@Setter
 	private Date version;
 
 	/**
@@ -98,6 +91,34 @@ public abstract class BaseEntity implements java.io.Serializable {
 	 */
 	public BaseEntity() {
 		super();
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public Date getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(Date version) {
+		this.version = version;
 	}
 
 	/**

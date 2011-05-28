@@ -9,8 +9,6 @@
  */
 package com.google.ysl.framework.common.hibernate;
 
-import lombok.Getter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +32,6 @@ public class AbstractHibernateDAO<T, PK> {
 	/**
 	 * @Fields persistentClass : 
 	 */
-	@Getter
 	private Class<T> persistentClass;
 
 	/**
@@ -47,4 +44,10 @@ public class AbstractHibernateDAO<T, PK> {
 				.getSuperClassGenricType(getClass());
 	}
 
+	/**
+	 * @return the persistentClass
+	 */
+	public Class<T> getPersistentClass() {
+		return persistentClass;
+	}
 }

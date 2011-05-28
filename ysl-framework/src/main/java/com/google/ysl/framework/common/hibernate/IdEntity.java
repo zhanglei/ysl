@@ -21,9 +21,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import com.google.ysl.framework.common.util.DateConvertUtils;
 
 /**
@@ -68,8 +65,6 @@ public abstract class IdEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
-	@Getter
-	@Setter
 	private Long id;
 
 	/**
@@ -78,8 +73,6 @@ public abstract class IdEntity implements java.io.Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Version
 	@Column(name = "version", unique = false, nullable = false, insertable = true, updatable = true, length = 20)
-	@Getter
-	@Setter
 	private Date version;
 
 	/**
@@ -88,6 +81,34 @@ public abstract class IdEntity implements java.io.Serializable {
 	 */
 	public IdEntity() {
 		super();
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public Date getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(Date version) {
+		this.version = version;
 	}
 
 	/**
