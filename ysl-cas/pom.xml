@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.google.ysl</groupId>
 	<artifactId>ysl-cas</artifactId>
@@ -245,6 +246,30 @@
 							<artifactId>maven-project-info-reports-plugin</artifactId>
 						</reportPlugin>
 					</reportPlugins>
+				</configuration>
+			</plugin>
+			<!-- tomcat插件 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>tomcat-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<url>http://localhost:8080/manager</url>
+					<username>tomcat</username>
+					<password>tomcat</password>
+					<path>/</path>
+					<port>8080</port>
+					<!-- <warSourceDirectory>webapp</warSourceDirectory> -->
+					<!-- <tomcatWebXml>${project.build.directory}/${project.build.finalName}/WEB-INF/web.xml</tomcatWebXml> -->
 				</configuration>
 			</plugin>
 		</plugins>

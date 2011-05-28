@@ -266,6 +266,30 @@
 					</reportPlugins>
 				</configuration>
 			</plugin>
+			<!-- tomcat插件 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>tomcat-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<url>http://localhost:8080/manager</url>
+					<username>tomcat</username>
+					<password>tomcat</password>
+					<path>/</path>
+					<port>8080</port>
+					<!-- <warSourceDirectory>webapp</warSourceDirectory> -->
+					<!-- <tomcatWebXml>${project.build.directory}/${project.build.finalName}/WEB-INF/web.xml</tomcatWebXml> -->
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<reporting>
