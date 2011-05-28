@@ -80,5 +80,15 @@ public class Constants {
 	 * @Fields File separator from System properties :
 	 */
 	public static final String FILE_SEP = System.getProperty("file.separator");
+	
+	/**
+	 * @Fields HOST : 
+	 */
+	public static final String HOST = "www.ysl-framework.com";
+
+	/**
+	 * @Fields URL : 
+	 */
+	public static final String URL = "http://www.ysl-framework.com";
 
 }
