@@ -37,7 +37,7 @@
 			value="${jdbc.driverClass}" />
 		<property
 			name="jdbcUrl"
-			value="${jdbc.jdbcurl}" />
+			value="${jdbc.jdbcUrl}" />
 		<property
 			name="user"
 			value="${jdbc.user}" />
