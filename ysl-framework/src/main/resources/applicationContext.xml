@@ -141,6 +141,7 @@
 				<value>com.google.ysl.*.model</value>
 			</list>
 		</property>
+		<!-- 
 		<property
 			name="eventListeners">
 			<map>
@@ -155,6 +156,7 @@
 				</entry>
 			</map>
 		</property>
+		 -->
 		<property
 			name="hibernateProperties">
 			<props>
