@@ -9,6 +9,9 @@
  */
 package com.google.ysl.framework.common.struts2;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>Title: BaseStruts2Action</p>
  * <p>Description: </p>
@@ -17,6 +20,10 @@ package com.google.ysl.framework.common.struts2;
  * @date May 9, 2011
  *
  */
-public class BaseStruts2Action {
+public abstract class AbstractStruts2Action {
 
+	/**
+	 * @Fields logger : 
+	 */
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 }

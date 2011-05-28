@@ -9,6 +9,9 @@
  */
 package com.google.ysl.framework.common.spring.mvc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>Title: AbstractSpringController</p>
  * <p>Description: </p>
@@ -19,4 +22,9 @@ package com.google.ysl.framework.common.spring.mvc;
  */
 public class AbstractSpringController {
 
+	/**
+	 * @Fields logger : 
+	 */
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+	
 }
