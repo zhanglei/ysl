@@ -57,6 +57,7 @@ public final class DateConvertUtils {
 	 * @throws
 	 *
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T extends java.util.Date> T parse(String dateString,
 			String dateFormat, Class<T> targetResultType) {
 		if (StringUtils.isEmpty(dateString))
