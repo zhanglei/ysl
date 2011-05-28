@@ -75,6 +75,6 @@ public class Constants {
 	/**
 	 * @Fields URL : 
 	 */
-	public static final String URL = "http://sso.ysl.com";
+	public static final String URL = "https://sso.ysl.com";
 
 }
