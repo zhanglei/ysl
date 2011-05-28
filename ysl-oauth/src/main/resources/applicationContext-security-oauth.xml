@@ -8,4 +8,13 @@
 	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.3.xsd 
 	http://spring-security-oauth.codehaus.org/3.0 http://spring-security-oauth.codehaus.org/schema/spring-security-oauth-3.0.xsd"
 	default-lazy-init="true">
+	<oauth:provider
+		token-services-ref="tokenServices"
+		request-token-url="/oauth/request_token"
+		authenticate-token-url="/oauth/authorize"
+		authentication-failed-url="/oauth/confirm_access"
+		access-token-url="/oauth/access_token"
+		require10a="false" />
+	<oauth:token-services
+		id="tokenServices" />
 </beans>
