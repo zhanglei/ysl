@@ -248,6 +248,7 @@
 	<bean
 		id="dozer"
 		class="org.dozer.DozerBeanMapper" />
+	<!--
 	<bean
 		id="solrServerFactory"
 		class="com.google.ysl.framework.solr.SolrServerFactoryBean">
@@ -255,6 +256,7 @@
 			name="serverUrl"
 			value="http://localhost:8983/solr" />
 	</bean>
+	-->
 
 	<bean
 		name="memcachedClientBuilder"
