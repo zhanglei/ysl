@@ -22,7 +22,7 @@
 		<developerConnection>scm:svn:http://ysl.googlecode.com/svn/trunk/</developerConnection>
 	</scm>
 	<properties>
-		<hibernate.version>3.6.1.Final</hibernate.version>
+		<hibernate.version>3.6.5.Final</hibernate.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<struts.version>2.2.3</struts.version>
 		<spring-security.version>3.0.5.RELEASE</spring-security.version>
