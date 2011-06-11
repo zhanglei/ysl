@@ -355,6 +355,12 @@ public class User extends BaseEntity implements UserDetails {
 		return !disabled;
 	}
 
+	/**(non-Javadoc)
+	 * <p>Title: toString</p>
+	 * <p>Description: </p>
+	 * @return
+	 * @see com.google.ysl.framework.common.hibernate.BaseEntity#toString()
+	 */
 	@Override
 	public String toString() {
 		if (this.getId() != null) {
@@ -365,6 +371,13 @@ public class User extends BaseEntity implements UserDetails {
 		}
 	}
 
+	/**(non-Javadoc)
+	 * <p>Title: equals</p>
+	 * <p>Description: </p>
+	 * @param o
+	 * @return
+	 * @see com.google.ysl.framework.common.hibernate.BaseEntity#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -381,6 +394,12 @@ public class User extends BaseEntity implements UserDetails {
 		return false;
 	}
 
+	/**(non-Javadoc)
+	 * <p>Title: hashCode</p>
+	 * <p>Description: </p>
+	 * @return
+	 * @see com.google.ysl.framework.common.hibernate.BaseEntity#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		if (this.getId() != null) {
