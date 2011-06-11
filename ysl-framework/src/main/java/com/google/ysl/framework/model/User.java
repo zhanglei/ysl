@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -23,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -36,6 +39,10 @@ import com.google.ysl.framework.common.hibernate.BaseEntity;
  * @date May 27, 2011
  *
  */
+@Entity
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
+@Table(name = "ysl_user", uniqueConstraints = {})
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends BaseEntity implements UserDetails {
 
 	/**
