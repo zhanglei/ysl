@@ -1,0 +1,6 @@
+{
+        "name" : "node_properties",
+        "main" : "./lib/node_properties.js",
+        "author" : "zhanglei",
+        "version" : "0.1"
+}
