@@ -1,9 +1,9 @@
 var parseURL = require('url').parse;
-//¸ù¾İhttpÇëÇóµÄmethodÀ´·Ö±ğ±£´æroute¹æÔò
+//æ ¹æ®httpè¯·æ±‚çš„methodæ¥åˆ†åˆ«ä¿å­˜routeè§„åˆ™
 var routes = {get:[], post:[], head:[], put:[], delete:[]};
 /**
-* ×¢²ároute¹æÔò
-* Ê¾Àı£º
+* æ³¨å†Œrouteè§„åˆ™
+* ç¤ºä¾‹ï¼š
 * route.map({
 *     method:'post',
 *     url: /\/blog\/post\/(\d+)\/?$/i,
@@ -15,7 +15,7 @@ exports.map = function(dict){
     if(dict && dict.url && dict.controller){
         var method = dict.method ? dict.method.toLowerCase() : 'get';
         routes[method].push({
-            u: dict.url, //urlÆ¥ÅäÕıÔò
+            u: dict.url, //urlåŒ¹é…æ­£åˆ™
             c: dict.controller,
             a: dict.action || 'index'
         });
@@ -24,19 +24,19 @@ exports.map = function(dict){
 exports.getAction = function(url, method){
     var r = {controller:null, action:null, args:null},
         method = method ? method.toLowerCase() : 'get',
-        // url: /blog/index?page=1 ,ÔòpathnameÎª: /blog/index
+        // url: /blog/index?page=1 ,åˆ™pathnameä¸º: /blog/index
         pathname = parseURL(url).pathname;
     var m_routes = routes[method];
     for(var i in m_routes){
-        //ÕıÔòÆ¥Åä
+        //æ­£åˆ™åŒ¹é…
         r.args = m_routes[i].u.exec(pathname);
         if(r.args){
             r.controller = m_routes[i].c;
             r.action = m_routes[i].a;
-            r.args.shift(); //µÚÒ»¸öÖµÎªÆ¥Åäµ½µÄÕû¸öurl£¬È¥µô
+            r.args.shift(); //ç¬¬ä¸€ä¸ªå€¼ä¸ºåŒ¹é…åˆ°çš„æ•´ä¸ªurlï¼Œå»æ‰
             break;
         }
     }
-    //Èç¹ûÆ¥Åäµ½route£¬r´ó¸ÅÊÇ {controller:'blog', action:'index', args:['1']}
+    //å¦‚æœåŒ¹é…åˆ°routeï¼Œrå¤§æ¦‚æ˜¯ {controller:'blog', action:'index', args:['1']}
     return r;
 };
