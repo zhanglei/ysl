@@ -7,7 +7,7 @@
  * @date 2011-5-15
  * @version 1.0
  */
-package com.google.ysl.spider;
+package com.googlecode.ysl.spider;
 
 /**
  * <p>Title: App</p>
