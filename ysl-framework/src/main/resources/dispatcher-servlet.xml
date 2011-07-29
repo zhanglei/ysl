@@ -22,7 +22,7 @@
 		<property
 			name="interceptors">
 			<bean
-				class="com.google.ysl.framework.common.spring.mvc.interceptor.SharedRenderVariableInterceptor" />
+				class="com.googlecode.ysl.framework.common.spring.mvc.interceptor.SharedRenderVariableInterceptor" />
 		</property>
 	</bean>
 

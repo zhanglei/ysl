@@ -25,7 +25,7 @@
 
 	<!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
 	<context:component-scan
-		base-package="com.google.ysl" />
+		base-package="com.googlecode.ysl" />
 
 	<!-- DataSource for J2EE environments -->
 	<bean
@@ -90,7 +90,7 @@
 	</bean>
 	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"> 
 		<property name="dataSource" ref="dataSource" /> <property name="packagesToScan"> 
-		<list> <value>com.google.ysl.*.model</value> </list> </property> <property 
+		<list> <value>com.googlecode.ysl.*.model</value> </list> </property> <property 
 		name="hibernateProperties"> <props> <prop key="hibernate.dialect"> org.hibernate.dialect.OracleDialect 
 		</prop> <prop key="hibernate.show_sql"> true </prop> <prop key="hibernate.default_schema">ysl</prop> 
 		<prop key="hibernate.hbm2ddl.auto"> validate </prop> <prop key="hibernate.format_sql"> 
@@ -138,7 +138,7 @@
 		<property
 			name="packagesToScan">
 			<list>
-				<value>com.google.ysl.*.model</value>
+				<value>com.googlecode.ysl.*.model</value>
 			</list>
 		</property>
 		<!-- 
@@ -149,7 +149,7 @@
 					key="save-update">
 					<list>
 						<bean
-							class="com.google.ysl.framework.common.hibernate.AuditListener" />
+							class="com.googlecode.ysl.framework.common.hibernate.AuditListener" />
 						<bean
 							class="org.hibernate.event.def.DefaultSaveOrUpdateEventListener" />
 					</list>
@@ -239,7 +239,7 @@
 	<!-- 用于持有ApplicationContext,可以使用ApplicationContextHolder.getBean('xxxx')的静态方法得到spring 
 		bean对象 -->
 	<bean
-		class="com.google.ysl.framework.common.spring.SpringContextHolder"
+		class="com.googlecode.ysl.framework.common.spring.SpringContextHolder"
 		lazy-init="false" />
 	<!-- JSR303 Validator定义 -->
 	<!-- <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" 
@@ -251,7 +251,7 @@
 	<!--
 	<bean
 		id="solrServerFactory"
-		class="com.google.ysl.framework.solr.SolrServerFactoryBean">
+		class="com.googlecode.ysl.framework.solr.SolrServerFactoryBean">
 		<property
 			name="serverUrl"
 			value="http://localhost:8983/solr" />

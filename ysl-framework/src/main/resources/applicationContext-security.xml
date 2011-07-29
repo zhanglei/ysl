@@ -35,7 +35,7 @@
 			session-authentication-strategy-ref="sas" />
 	</s:http>
 	<bean id="authenticationFilter"
-		class="com.google.ysl.framework.security.web.authentication.ValidateCodeUsernamePasswordAuthenticationFilter">
+		class="com.googlecode.ysl.framework.security.web.authentication.ValidateCodeUsernamePasswordAuthenticationFilter">
 		<property name="filterProcessesUrl" value="/j_spring_security_check" />
 		<property name="authenticationSuccessHandler"
 			ref="savedRequestAwareAuthenticationSuccessHandler" />
@@ -46,7 +46,7 @@
 		<property name="allowEmptyValidateCode" value="true" />
 	</bean>
 	<bean id="savedRequestAwareAuthenticationSuccessHandler"
-		class="com.google.ysl.framework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		class="com.googlecode.ysl.framework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
 		<property name="defaultTargetUrl" value="/main.do" />
 	</bean>
 	<bean id="simpleUrlAuthenticationFailureHandler"
@@ -85,7 +85,7 @@
 		<property name="key" value="springRocks" />
 	</bean>
 	<bean id="concurrencyFilter"
-		class="com.google.ysl.framework.security.web.session.ConcurrentSessionFilter">
+		class="com.googlecode.ysl.framework.security.web.session.ConcurrentSessionFilter">
 		<property name="sessionRegistry" ref="sessionRegistry" />
 		<property name="expiredUrl" value="/login.do" />
 	</bean>
@@ -108,7 +108,7 @@
 		</property>
 	</bean>
 	<bean id="autoLoginFilter"
-		class="com.google.ysl.framework.security.web.filter.AutoLoginFilter">
+		class="com.googlecode.ysl.framework.security.web.filter.AutoLoginFilter">
 		<property name="enabled" value="false" />
 		<property name="defaultUserName" value="admin" />
 	</bean>
@@ -116,5 +116,5 @@
 		<property name="authenticationManager" ref="authenticationManager"/> <property 
 		name="accessDecisionManager" ref="accessDecisionManager"/> <property name="securityMetadataSource" 
 		ref="securityMetadataSource"/> <property name="observeOncePerRequest" value="false"/> 
-		</bean> <bean id="securityMetadataSource" class="com.google.ysl.framework.security.web.access.intercept.SecureResourceFilterInvocationSecurityMetadataSource"></bean> -->
+		</bean> <bean id="securityMetadataSource" class="com.googlecode.ysl.framework.security.web.access.intercept.SecureResourceFilterInvocationSecurityMetadataSource"></bean> -->
 </beans>
