@@ -7,7 +7,7 @@
  * @date May 17, 2011
  * @version 1.0
  */
-package com.google.ysl.oauth;
+package com.googlecode.ysl.oauth;
 
 /**
  * <p>Title: Main</p>
