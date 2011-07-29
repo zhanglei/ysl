@@ -7,7 +7,7 @@
  * @date May 14, 2011
  * @version 1.0
  */
-package com.google.ysl.cas;
+package com.googlecode.ysl.cas;
 
 /**
  * <p>Title: Constants</p>
