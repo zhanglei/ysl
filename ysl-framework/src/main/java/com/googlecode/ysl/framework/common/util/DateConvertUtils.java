@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * <p>Title: DateConvertUtils</p>
- * <p>Description: </p>
+ * <p>Description: 日期转化工具类</p>
  * <p>Company: </p> 
  * @author zhanglei<zhanglei_job_email@163.com>
  * @date May 20, 2011
