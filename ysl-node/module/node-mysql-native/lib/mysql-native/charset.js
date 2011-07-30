@@ -33,7 +33,7 @@ exports.Charset.prototype.convertFromBytes = function(bytes) {
     return bytes;
 }
 
-// "あい" => "\xE3\x81\x82\xE3\x81\x84"  // UTF-8
+// "utf-8" => "\xE3\x81\x82\xE3\x81\x84"  // UTF-8
 var convertUTF8ToBytes = function(str) {
     if(typeof(str)=='undefined') return undefined;
     if(typeof(str)=='undefined') return undefined;
