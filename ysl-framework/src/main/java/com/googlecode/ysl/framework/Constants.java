@@ -30,6 +30,11 @@ public class Constants {
 	public static final String SESSION_KEY = "_session_key_";
 
 	/**
+	 * @Fields SESSION_ID : 
+	 */
+	public static final String SESSION_ID = "jsessionid";
+	
+	/**
 	 * @Fields session expiry time :
 	 */
 	public static final int SESSION_EXPIRY_TIME = 60 * 60;
@@ -80,7 +85,7 @@ public class Constants {
 	 * @Fields File separator from System properties :
 	 */
 	public static final String FILE_SEP = System.getProperty("file.separator");
-	
+
 	/**
 	 * @Fields HOST : 
 	 */
@@ -90,5 +95,20 @@ public class Constants {
 	 * @Fields URL : 
 	 */
 	public static final String URL = "http://www.ysl-framework.com";
+
+	/**
+	 * @Fields IMG_URL : 
+	 */
+	public static final String IMG_URL = "http://img.ysl-framework.com";
+
+	/**
+	 * @Fields MEDIA_URL : 
+	 */
+	public static final String MEDIA_URL = "http://media.ysl-framework.com";
+
+	/**
+	 * @Fields STATIC_URL : 
+	 */
+	public static final String STATIC_URL = "http://static.ysl-framework.com";
 
 }
