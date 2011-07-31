@@ -22,7 +22,7 @@ import com.googlecode.ysl.framework.common.util.ReflectionUtils;
  * @date May 26, 2011
  *
  */
-public class AbstractHibernateDAO<T, PK> {
+public class AbstractHibernateDAO<T, PK> implements HibernateDAO<T,PK> {
 
 	/**
 	 * @Fields logger : 

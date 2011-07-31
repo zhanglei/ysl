@@ -11,7 +11,7 @@ package com.googlecode.ysl.framework;
 
 /**
  * <p>Title: Constants</p>
- * <p>Description: </p>
+ * <p>Description: 常量定义</p>
  * <p>Company: </p> 
  * @author zhanglei<zhanglei_job_email@163.com>
  * @date May 9, 2011
