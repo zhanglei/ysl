@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans
-	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:s="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:s="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.3.xsd"
 	default-lazy-init="true">
 	<description>使用SpringSecurity的安全配置文件</description>
+
+	<s:http use-expressions="true" access-denied-page="/commons/403.html">
+		<s:intercept-url pattern="/commons/**" filters="none" />
+		<s:intercept-url pattern="/css/**" filters="none" />
+		<s:intercept-url pattern="/images/**" filters="none" />
+		<s:intercept-url pattern="/js/**" filters="none" />
+		<s:intercept-url pattern="/skins/**" filters="none" />
+		<s:intercept-url pattern="/widgets/**" filters="none" />
+		<s:intercept-url pattern="/wro/**" filters="none" />
+		<s:intercept-url pattern="/index.html" access="permitAll" />
+		<s:form-login login-page="/login.do"
+			authentication-failure-url="/login.do?error=true" default-target-url="/login.do"
+			always-use-default-target="true" />
+	</s:http>
+	<s:authentication-manager>
+		<s:authentication-provider>
+			<s:user-service>
+				<s:user name="admin" password="admin" authorities="ROLE_USER"/>
+			</s:user-service>
+		</s:authentication-provider>
+	</s:authentication-manager>
 </beans>	
