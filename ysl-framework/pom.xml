@@ -38,7 +38,7 @@
 		<jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
 		<jdbc.version>5.1.16</jdbc.version>
 		<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-		<jdbc.url><![CDATA[jdbc:mysql://127.0.0.1:3306/ysl_framework?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull]]></jdbc.url>
+		<jdbc.url><![CDATA[jdbc:mysql://127.0.0.1:3306/ysl-framework?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull]]></jdbc.url>
 		<jdbc.username>root</jdbc.username>
 		<jdbc.password>123456</jdbc.password>
 	</properties>
@@ -1102,7 +1102,7 @@
 					<artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
 			</exclusions>
-			<version>1.3.4</version>
+			<version>1.3.5</version>
 		</dependency>
 		<!-- memcached end -->
 
